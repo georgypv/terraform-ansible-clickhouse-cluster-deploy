@@ -1,10 +1,4 @@
 ---
-#- name: Debug vars
-#  hosts: all
-#  tasks:
-#    - name: tet
-#      debug:
-#        msg: "{{inventory_hostname | regex_search('^ch\\d{2}-(shard\\d{2})-(replica\\d{2})', '\\1') }}"
 
 - name: Preliminary steps
   hosts: all
