@@ -1,0 +1,14 @@
+tickTime=2000
+dataDir=/data/zookeeper
+dataLogDir=/data/zookeeper
+clientPort=2181
+maxClientCnxns=60
+
+autopurge.purgeInterval=1
+autopurge.snapRetainCount=5
+
+4lw.commands.whitelist=stat, ruok
+
+server.1={{ip_node5}}:2888:3888
+
+

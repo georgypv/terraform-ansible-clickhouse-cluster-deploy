@@ -1,0 +1,2 @@
+shard_name: "{{inventory_hostname | regex_search('^ch\\d{2}-(shard\\d{2})-(replica\\d{2})', '\\1') }}"
+replica_name: "{{inventory_hostname | regex_search('^ch\\d{2}-(shard\\d{2})-(replica\\d{2})', '\\2') }}"

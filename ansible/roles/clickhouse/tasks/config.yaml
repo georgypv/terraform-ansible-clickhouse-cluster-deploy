@@ -1,0 +1,8 @@
+---
+
+- name: Copy config.xml file
+  template:
+    src: config.xml.j2
+    dest: /etc/clickhouse-server/config.xml
+  become: true
+  notify: Restart ClickHouse

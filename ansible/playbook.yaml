@@ -1,0 +1,50 @@
+---
+#- name: Debug vars
+#  hosts: all
+#  tasks:
+#    - name: tet
+#      debug:
+#        msg: "{{inventory_hostname | regex_search('^ch\\d{2}-(shard\\d{2})-(replica\\d{2})', '\\1') }}"
+
+- name: Preliminary steps
+  hosts: all
+  remote_user: ubuntu
+  become: true
+  tasks:
+    - name: Flush iptables
+      become: true
+      iptables:
+        flush: true
+
+
+    - name: Install ntp
+      become: true
+      apt:
+        pkg:
+          - ntpdate
+        update_cache: true
+
+
+    - name: Synchronize time
+      become: true
+      cron:
+        name: "synchronize time"
+        minute: "*/5"
+        job: "ntpdate -u clock.isc.org >/dev/null 2>&1"
+
+    - name: Reboot VMs
+      reboot:
+
+- name: Set up Zookeeper
+  hosts: zookeeper
+  remote_user: ubuntu
+  become: true
+  roles:
+    - zookeeper
+
+- name: Set up ClickHouse
+  hosts: click
+  remote_user: ubuntu
+  become: true
+  roles:
+    - clickhouse

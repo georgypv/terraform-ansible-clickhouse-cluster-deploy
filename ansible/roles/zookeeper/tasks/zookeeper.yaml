@@ -1,0 +1,65 @@
+---
+- name: add 'zk' group
+  group:
+    name: zk
+    state: present
+  become: true
+
+- name: add 'zk' user
+  user:
+    name: zk
+    group: zk
+    shell: /bin/bash
+    state: present
+    groups: sudo #usermod -aG sudo zk
+    append: true
+  become: true
+
+
+- name: create zookeeper data directory
+  file:
+    path: /data/zookeeper
+    state: directory
+    owner: zk
+    group: zk
+  become: true
+
+- name: download zookeeper
+  get_url:
+    url: "https://dlcdn.apache.org/zookeeper/zookeeper-3.8.0/apache-zookeeper-3.8.0-bin.tar.gz"
+    dest: /opt
+  become: true
+
+
+- name: unpack zookeeper
+  unarchive:
+    src: "/opt/apache-zookeeper-3.8.0-bin.tar.gz"
+    dest: /opt
+    remote_src: true
+    group: zk
+    owner: zk
+    extra_opts:
+      - --transform
+      - 's/apache-zookeeper-3.8.0-bin/zookeeper/'
+  become: true
+
+- name: configure zookeeper
+  template:
+    src: zookeeper.cfg.j2
+    dest: /opt/zookeeper/conf/zoo.conf
+  become: true
+
+
+- name: setup systemd target for zookeeper
+  template:
+    src: zookeeper.service
+    dest: /etc/systemd/system
+  become: true
+  notify: Restart Zookeeper
+
+- name: Enable Zookeeper
+  systemd:
+    name: zookeeper
+    state: started
+    enabled: true
+  become: true
