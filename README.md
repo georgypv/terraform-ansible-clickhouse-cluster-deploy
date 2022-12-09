@@ -1,6 +1,6 @@
 The present repository contains scripts that allow to create a ClickHouse cluster (2 shards with 2 replicas each) on Yandex Cloud infrastructure.
 
-The repository contains scripts which set up a cluster of 4 virtual machines with help of Terraform ( in `./terraform`) and 2 Ansible roles - one for Zookeeper and the other for ClickHouse - 
+The repository contains scripts which set up a cluster of 5 virtual machines with help of Terraform ( in `./terraform`) and 2 Ansible roles - one for Zookeeper and the other for ClickHouse - 
 in `./ansible`.
 
 ##### Instructions:
