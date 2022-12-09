@@ -1,4 +1,6 @@
+The present repository contains scripts that allow to create a ClickHouse cluster (2 shards with 2 replicas each) on Yandex Cloud infrastructure.
 
+##### Instructions:
 1. Set up cloud infrastructure (VMS + Network) and create `inventory.yaml` file for Ansible by running:
     ```bash prepare_infra.sh```
 2. Go to ./ansible directory and run `ansible-playbook playbook.yaml` to install and configure a ClickHouse cluster with coordination via Zookeeper.
