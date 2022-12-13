@@ -56,10 +56,3 @@
     dest: /etc/systemd/system
   become: true
   notify: Restart Zookeeper
-
-- name: Enable Zookeeper
-  systemd:
-    name: zookeeper
-    state: started
-    enabled: true
-  become: true
